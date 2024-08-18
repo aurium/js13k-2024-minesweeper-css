@@ -1,0 +1,16 @@
+{
+  "name": "js13k-2024-minesweeper-css",
+  "version": "0.0.1",
+  "description": "Minesweeper in Pure CSS",
+  "main": "index.html",
+  "scripts": {
+    "build": "./build",
+    "build:watch": "while inotifywait -r -e modify .; do ./build; done",
+    "serve": "python3 -m http.server 8080 -d dist",
+    "pack": "./pack"
+  },
+  "author": "Aurélio Heckert",
+  "license": "AGPL-3.0-or-later",
+  "devDependencies": {
+  }
+}

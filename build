@@ -1,0 +1,39 @@
+#!/usr/bin/env node
+const fs = require('fs')
+
+console.log('>> Building...')
+
+try {
+  fs.statSync('./dist')
+} catch(err) {
+  if (err.code === 'ENOENT') {
+    fs.mkdirSync('./dist')
+  } else {
+    console.error('>> Cant create dist dir, because', err)
+    process.exit(1)
+  }
+}
+
+function metaCompiler(metaCode) {
+  return eval(
+    'let code = `' + metaCode
+      .replace(/\{\{=\s*(.*?)\s*\}\}/gsm, '${$1}')
+      .replace(/(?:\n *)?\{\{(.*?)\}\}/gsm, '`;\n$1;\n code += `') +
+    '`; code'
+  )
+}
+
+function metaCompileFile(filesIn, fileOut) {
+  if (!Array.isArray(filesIn)) filesIn = [filesIn]
+  const meta = filesIn.map(f => fs.readFileSync('./src/'+f, 'utf8')).join('\n')
+  fs.writeFileSync('./dist/'+fileOut, metaCompiler(meta))
+}
+
+GAME_SIZE = 9
+metaCompileFile(
+  ['base.meta.css', 'table.meta.css', 'game-set.meta.css'],
+  'style.css'
+)
+metaCompileFile('index.meta.html', 'index.html')
+
+console.log('>> Done!')

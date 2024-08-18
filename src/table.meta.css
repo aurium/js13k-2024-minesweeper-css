@@ -1,0 +1,108 @@
+body {
+  --g1x: 15%;
+  --g1y: 25%;
+  --g2x: -5%;
+  --g2y: 78%;
+  background: #730;
+  background-image:
+    radial-gradient(at var(--g1x) var(--g1y),
+      #420 00%, transparent 01%,
+      #420 05%, transparent 05.1%,
+      #420 10%, transparent 10.1%,
+      #420 15%, transparent 15.1%,
+      #420 20%, transparent 20.1%,
+      #420 25%, transparent 25.1%
+    ),
+    radial-gradient(at var(--g2x) var(--g2y),
+      #420 00%, transparent 01%,
+      #420 05%, transparent 05.1%,
+      #420 10%, transparent 10.1%,
+      #420 15%, transparent 15.1%,
+      #420 20%, transparent 20.1%,
+      #420 25%, transparent 25.1%
+    );
+  background-size: 500vw 50vh;
+}
+
+h1 {
+  position: absolute;
+  top: 4em;
+  left: calc( (100vw - 90vh) / 3 - 4.5em );
+  transform: rotate(-45deg);
+  user-select: none;
+  font-size: 2.5em;
+  white-space: nowrap;
+  color: #999;
+  margin: 0;
+  padding: .1em;
+  overflow: hidden;
+  background: #808080;
+  color: #666;
+  text-shadow: .03em .03em 0 #444, -.03em -.03em 0 #DDD;
+  filter: blur(.01em);
+  mix-blend-mode: overlay;
+  div {
+    font-size: 2em;
+    transform: scale(1.55, 1);
+    line-height: .8em;
+  }
+}
+
+#pre-info {
+  font-size: 1.75em;
+  line-height: 1.4em;
+  grid-area: info;
+  text-align: left;
+  padding: 0 1em 20vh 1em;
+  margin: 0;
+  transition: 1s;
+  span {
+    display: block;
+    font-size: 80%;
+  }
+  #start {
+    display: inline-block;
+    line-height: 1em;
+    padding: .2em .4em;
+    border-radius: .4em;
+    background: #07D;
+    box-shadow: 0 0 .6em rgba(30,10,0,.8);
+    text-shadow: 0 0 .2em #048;
+    input { display: none }
+    cursor: pointer;
+  }
+  &:has(#start :checked) {
+    font-size: .01em;
+    opacity: 0;
+  }
+}
+
+@media only screen and (orientation: portrait) {
+  body {
+    --g1x: 25%;
+    --g1y: 18%;
+    --g2x: 78%;
+    --g2y:  0%;
+    background-size: 50vw 500vh;
+  }
+
+  h1 {
+    position: static;
+    transform: rotate(0deg);
+    font-size: 12vw;
+  }
+
+  #pre-info {
+    font-size: 2.2em;
+    height: 20vw;
+    padding: 0;
+    span {
+      display: block;
+      font-size: 80%;
+      #start {
+        font-size: 1.2em;
+        padding: .2em .1em;
+      }
+    }
+  }
+}

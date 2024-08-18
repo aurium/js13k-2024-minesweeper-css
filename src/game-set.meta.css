@@ -1,0 +1,222 @@
+@media only screen and (orientation: landscape) {
+  body {
+    display: grid;
+    grid-template-areas:
+      "pad1 game pad2"
+      "info game pad2";
+  }
+  main {
+    grid-area: game;
+    margin-right: 2em;
+  }
+}
+
+main {
+  user-select: none;
+  width: var(--game-width);
+  height: var(--game-width);
+  --main-radius: calc(var(--size) / 4.25);
+  border-radius: var(--main-radius);
+  box-shadow: 0 0 1em #000;
+  background: #888;
+  --N:  0;
+  --S:  0;
+  --W:  0;
+  --E:  0;
+  --NW: 0;
+  --NE: 0;
+  --SW: 0;
+  --SE: 0;
+  p {
+    display: flex;
+    margin: 0;
+    &:first-child b {
+      &::before { top: 0 }
+      &:first-child::before { border-radius: var(--main-radius) 0 0 0 }
+      &:last-child::before { border-radius: 0 var(--main-radius) 0 0 }
+    }
+    &:last-child b {
+      border-bottom: none;
+      &::before { bottom: 0 }
+      &:first-child::before { border-radius: 0 0 0 var(--main-radius) }
+      &:last-child::before { border-radius: 0 0 var(--main-radius) 0 }
+    }
+  }
+  b {
+    position: relative;
+    display: inline-block;
+    width: var(--size);
+    height: var(--size);
+    /* background: #888; */
+    border: 4px dotted rgba(0,0,0,.5);
+    border-top: none;
+    border-left: none;
+    transform: scale(1);
+    transition: .5s;
+    &:first-child {
+      &::before { left: 0 }
+    }
+    &:last-child {
+      border-right: none;
+      &::before { right: 0 }
+    }
+    &::before {
+      position: absolute;
+      top: -5px;
+      bottom: -5px;
+      left: -5px;
+      right: -5px;
+      font-size: 3em;
+      line-height: calc(var(--size) + 10px);
+      /* background: rgba(255,0,0,.4); */
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      top: 3px;
+      bottom: 3px;
+      left: 3px;
+      right: 3px;
+      border-radius: calc(var(--size) / 5);
+      pointer-events: none;
+      transition: .5s;
+    }
+    &:not(:has(.bomb :checked))::before { /* This shows the number of neighbour bombs */
+      counter-reset: count calc(
+        var(--N)  + var(--S)  + var(--W)  + var(--E) +
+        var(--NW) + var(--NE) + var(--SW) + var(--SE)
+      );
+      content: counter(count);
+    }
+    &:has(.bomb :checked)::before {
+      content: "💣";
+    }
+    &:has(.open :checked) {
+      &::before {
+        font-size: calc(var(--size) - 12px);
+        background: #888;
+        /* box-shadow: 0 0 6px #888, 0 0 6px #888, 0 0 6px #888; */
+      }
+      &:has(.bomb :checked)::before {
+        font-size: calc( var(--size) * .75 );
+      }
+    }
+    &:not(:has(.open :checked)):has(.flag :checked) {
+      &::after {
+        background:
+          linear-gradient(
+            15deg,
+            #555 20%, #333 40%,
+            rgba(0,0,0,.5) 41%, rgba(0,0,0,.0) 60%,
+            #555 61%
+          ),
+          linear-gradient(
+            -45deg,
+            {{=(
+              colors = [ '#333', '#FD0' ],
+              Array(10).fill(0).flatMap((_,i)=> [
+                (i>0 && `${colors[i%2]} ${(i*100/10+1).toFixed(2)}%`),
+                (i<9 && `${colors[i%2]} ${((i+1)*100/10).toFixed(2)}%`)
+              ]).filter(v=>v).join(',')
+            )}}
+          ) !important;
+      }
+    }
+    .bomb { /* Before start */
+      position: absolute;
+      display: block;
+      width: 100%;
+      height: 100%;
+      /* background: rgba(255,0,0,.2); */
+      input { display: none }
+    }
+    span {
+      position: absolute;
+      display: block;
+      top: 50%;
+      left: 50%;
+      font-size: 1.333rem;
+      width: 7.3em;
+      height: 7.3em;
+      border-radius: 1em;
+      transform: translate(-50%, -50%) scale(.1);
+      background: rgba(255,255,255,0.4);
+      text-align: left;
+      opacity: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 5;
+      transition: .5s;
+      label {
+        position: absolute;
+        left: .3em;
+        right: .3em;
+        display: block;
+        white-space: nowrap;
+        font-size: 1.5em;
+        line-height: 1.2em;
+        padding: .4em .6em;
+        background: #05A;
+        border-radius: .5em;
+        color: #FFF;
+        opacity: .666;
+        transition: .5s;
+        &:hover { opacity: 1 }
+        &.open { top: -2em }
+        &.flag { bottom: -2em }
+        input { display: none }
+      }
+      .flag {
+        &::before { content: "Flag" }
+        &:has(:checked)::before { content: "Unflag" }
+      }
+    }
+  }
+
+  /* * * BOMB Neighbour Calculator */
+  b:has(.bomb :checked) + b { --W: 1 }
+  b:has(+ b .bomb :checked) { --E: 1 }
+  {{ for (let i=1; i <= GAME_SIZE; i++) { }}
+  p:has(b:nth-child({{= i }}) .bomb :checked) {
+    + p b:nth-child({{= i-1 }}) { --NW: 1 }
+    + p b:nth-child({{= i   }}) { --N:  1 }
+    + p b:nth-child({{= i+1 }}) { --NE: 1 }
+  }
+  p:has(+ p b:nth-child({{= i }}) .bomb :checked) {
+    b:nth-child({{= i-1 }}) { --SE: 1 }
+    b:nth-child({{= i   }}) { --S:  1 }
+    b:nth-child({{= i+1 }}) { --SW: 1 }
+  }
+  {{ } }}
+
+  /* * * STARTED! * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+  &:has(+ p #start :checked) {
+    margin-right: 0;
+    .bomb {
+      display: none;
+    }
+    b:not(:has(.open :checked)) {
+      &::after {
+        background: linear-gradient(135deg, #BBB, #555);
+      }
+      &:not(:focus)::after {
+      }
+      &:focus {
+        position: relative;
+        transform: scale(1.5);
+        border: 0px dashed rgba(128,128,128,0);
+        box-shadow: 0 0 1em #000, 0 0 1em #000, 0 0 1em #000;
+        border-radius: 1em;
+        outline: none;
+        z-index: 2;
+        span {
+          pointer-events: all;
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1);
+          *.open { top: .3em }
+          *.flag { bottom: .3em }
+        }
+      }
+    }
+  }
+}
