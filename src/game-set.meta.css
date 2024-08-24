@@ -66,7 +66,7 @@ main {
       bottom: -5px;
       left: -5px;
       right: -5px;
-      font-size: 3em;
+      font-size: 2.5em;
       line-height: calc(var(--size) + 10px);
       /* background: rgba(255,0,0,.4); */
     }
@@ -74,12 +74,13 @@ main {
       content: "";
       position: absolute;
       top: 3px;
-      bottom: 3px;
+      bottom: var(--size);
       left: 3px;
       right: 3px;
+      background: #666 linear-gradient(#888 20%, #666);
       border-radius: calc(var(--size) / 5);
       pointer-events: none;
-      transition: .5s;
+      transition: 1s linear;
     }
     &:not(:has(.bomb :checked))::before { /* This shows the number of neighbour bombs */
       counter-reset: count calc(
@@ -103,12 +104,21 @@ main {
     }
     &:not(:has(.open :checked)):has(.flag :checked) {
       &::after {
+        border-radius: calc(var(--size) / 6);
+        left: 0px;
+        right: 0px;
         background:
           linear-gradient(
+            90deg,
+            #888,
+            rgba(127,127,127,0) 30%, rgba(127,127,127,0) 70%,
+            #888
+          ),
+          linear-gradient(
             15deg,
-            #555 20%, #333 40%,
+            #888 25%, #444 40%,
             rgba(0,0,0,.5) 41%, rgba(0,0,0,.0) 60%,
-            #555 61%
+            #888 61%
           ),
           linear-gradient(
             -45deg,
@@ -197,7 +207,8 @@ main {
     }
     b:not(:has(.open :checked)) {
       &::after {
-        background: linear-gradient(135deg, #BBB, #555);
+        bottom: 3px;
+        background: #666 linear-gradient(135deg, #BBB, #555);
       }
       &:not(:focus)::after {
       }

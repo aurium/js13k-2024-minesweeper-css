@@ -21,13 +21,13 @@ body {
       #420 20%, transparent 20.1%,
       #420 25%, transparent 25.1%
     );
-  background-size: 500vw 50vh;
+  background-size: 500dvw 50dvh;
 }
 
 h1 {
   position: absolute;
   top: 4em;
-  left: calc( (100vw - 90vh) / 3 - 4.5em );
+  left: calc( (100dvw - 90dvh) / 3 - 3.5em );
   transform: rotate(-45deg);
   user-select: none;
   font-size: 2.5em;
@@ -49,16 +49,23 @@ h1 {
 }
 
 #pre-info {
-  font-size: 1.75em;
-  line-height: 1.4em;
+  position: relative;
+  left: 0;
+  transform: rotate(0deg);
+  font-size: 1.75rem;
+  line-height: 2rem;
+  max-width: 40rem;
   grid-area: info;
   text-align: left;
-  padding: 0 1em 20vh 1em;
-  margin: 0;
-  transition: 1s;
+  padding: 4dvh 2rem;
+  margin: 0 1rem 20dvh 1rem;
+  background: linear-gradient(#FF8, #BB0);
+  color: #225;
+  box-shadow: .1rem .1rem .8rem #000;
   span {
+    margin-top: 1.5rem;
     display: block;
-    font-size: 80%;
+    /* font-size: 80%; */
   }
   #start {
     display: inline-block;
@@ -72,8 +79,11 @@ h1 {
     cursor: pointer;
   }
   &:has(#start :checked) {
-    font-size: .01em;
+    left: -100dvw;
+    transform: rotate(-90deg);
+    font-size: .01rem;
     opacity: 0;
+    transition: 1s 1s, left 1s ease-in, transform 1s ease-in;
   }
 }
 
@@ -83,26 +93,25 @@ h1 {
     --g1y: 18%;
     --g2x: 78%;
     --g2y:  0%;
-    background-size: 50vw 500vh;
+    background-size: 50dvw 500dvh;
   }
 
   h1 {
     position: static;
     transform: rotate(0deg);
-    font-size: 12vw;
+    font-size: 12dvw;
   }
 
   #pre-info {
-    font-size: 2.2em;
-    height: 20vw;
-    padding: 0;
-    span {
-      display: block;
-      font-size: 80%;
-      #start {
-        font-size: 1.2em;
-        padding: .2em .1em;
-      }
+    font-size: 1.8em;
+    line-height: 3rem;
+    min-height: 18rem;
+    max-width: 75dvw;
+    margin: 0 1em;
+    transform: rotate(15deg);
+    #start {
+      font-size: 1.2em;
+      padding: .2em .1em;
     }
   }
 }
