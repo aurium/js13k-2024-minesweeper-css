@@ -23,6 +23,7 @@ body {
   overflow: hidden;
   background: #444;
   color: #FFF;
+  user-select: none;
   * {
     box-sizing: border-box;
   }

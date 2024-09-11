@@ -1,0 +1,9 @@
+#winner {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: radial-gradient(transparent, transparent, rgba(255,140,0,.2), rgba(255,160,0,.5));
+  pointer-events: none;
+}
