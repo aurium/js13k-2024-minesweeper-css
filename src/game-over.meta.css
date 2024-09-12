@@ -10,14 +10,13 @@
   align-items: center;
   justify-content: center;
   background: radial-gradient(transparent, rgba(255,200,0,.2), rgba(240,100,0,.5), #900);
+  color: transparent;
   opacity: 0;
   pointer-events: none;
-  transition: 2s;
   g, o {
     display: block;
     font-weight: bold;
     line-height: .84em;
-    color: transparent;
     text-shadow: 0 0 .1em #E00, 0 0 .1em #F90, 0 0 .1em #F90,
                  0 0 .1em #A00, 0 0 .1em #A00, 0 0 .1em #A00,
                  0 0 .1em #A00, 0 0 .1em #A00, 0 0 .1em #A00,
@@ -44,7 +43,7 @@ body:has(b .bomb:checked ~ span .open :checked) {
     }
   }
   #gameover {
-    display: flex;
+    transition: 2s;
     opacity: 1;
     pointer-events: all;
     g, o {

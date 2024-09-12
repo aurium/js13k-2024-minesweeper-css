@@ -6,4 +6,18 @@
   right: 0;
   background: radial-gradient(transparent, transparent, rgba(255,140,0,.2), rgba(255,160,0,.5));
   pointer-events: none;
+  opacity: 0;
+}
+
+main{{
+    for (let y=0; y < GAME_SIZE; y++) for (let x=0; x < GAME_SIZE; x++) {
+  }}:has(
+      p:nth-child({{=y+1}}) b:nth-child({{=x+1}}) :is(
+        .bomb:not(:checked) ~ * .open :checked,
+        .bomb:checked ~ * .flag :checked
+      )
+    )
+{{ } }}
+~ #winner {
+  opacity: 1;
 }
