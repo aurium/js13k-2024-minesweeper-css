@@ -11,12 +11,13 @@
   <main>
     {{ for (let y=0; y < GAME_SIZE; y++) { }}
     <p>
-      {{ for (let x=0; x < GAME_SIZE; x++) { }}
-      <b tabindex="{{= y*GAME_SIZE + x + 1 }}">
+      {{ for (let x=0; x < GAME_SIZE; x++) { let idx = y*GAME_SIZE + x + 1 }}
+      <b tabindex="{{= idx }}">
         <input class="bomb" type="checkbox">
         <span>
-          <label class="open"><input type="checkbox">Open</label>
-          <label class="flag"><input type="checkbox"></label>
+          <label class="open"><input type="radio" name="G{{=idx}}">Open</label>
+          <label class="flag"><input type="radio" name="G{{=idx}}">Flag</label>
+          <label class="unflag"><input type="radio" name="G{{=idx}}">Unflag</label>
         </span>
       </b>
       {{ } }}

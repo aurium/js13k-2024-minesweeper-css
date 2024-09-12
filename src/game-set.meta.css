@@ -172,12 +172,14 @@ main {
         transition: .5s;
         &:hover { opacity: 1 }
         &.open { top: -2em }
-        &.flag { bottom: -2em }
+        &.flag, &.unflag { bottom: -2em }
         input { display: none }
       }
-      .flag {
-        &::before { content: "Flag" }
-        &:has(:checked)::before { content: "Unflag" }
+      .flag:has(:checked) {
+        display: none;
+      }
+      .flag:has(:not(:checked)) {
+        ~ .unflag { display: none }
       }
     }
   }
@@ -224,7 +226,7 @@ main {
           opacity: 1;
           transform: translate(-50%, -50%) scale(1);
           *.open { top: .3em }
-          *.flag { bottom: .3em }
+          *.flag, *.unflag { bottom: .3em }
         }
       }
     }
