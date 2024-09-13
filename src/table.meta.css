@@ -62,6 +62,7 @@ h1 {
   background: linear-gradient(#FF8, #BB0);
   color: #225;
   box-shadow: .1rem .1rem .8rem #000;
+  z-index: 5;
   span {
     margin-top: 1.5rem;
     display: block;

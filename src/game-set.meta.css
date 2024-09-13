@@ -201,7 +201,7 @@ main {
   {{ } }}
 
   /* * * STARTED! * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-  &:has(+ p #start :checked) {
+  &:has(~ p #start :checked) {
     margin-right: 0;
     .bomb {
       display: none;

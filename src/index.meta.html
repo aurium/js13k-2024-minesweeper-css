@@ -24,6 +24,12 @@
     </p>
     {{ } }}
   </main>
+  <div id="bug">
+    <l><l><l></l></l></l>
+    <h></h>
+    <w data-l></w>
+    <w data-r></w>
+  </div>
   <p id="pre-info">
     Select where the bombs will be placed,
     <span> then click
@@ -36,6 +42,8 @@
     <o>OVER</o>
   </div>
   <div id="winner">
+    {{= (f=(n)=>n?`<i><u>${f(n-1)}</u></i>`:'')(12) }}
+    <h2>You Win!</h2>
   </div>
 </body>
 </html>

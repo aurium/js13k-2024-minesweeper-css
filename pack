@@ -2,9 +2,12 @@
 
 PKG=/tmp/minesweeper-$(date +%F_%T).zip
 
-zip -r $PKG ./dist
+cd dist
+zip -r $PKG *
 
 SIZE=$( echo $(du --bytes $PKG) | cut -d' ' -f1 )
 MAX=$(( 1024 * 13 ))
 
 echo "$SIZE = $(echo "scale=2; ($SIZE*100)/$MAX" | bc -l )%"
+
+ls -lh $PKG

@@ -31,7 +31,14 @@ function metaCompileFile(filesIn, fileOut) {
 
 GAME_SIZE = 9
 metaCompileFile(
-  ['base.meta.css', 'table.meta.css', 'game-set.meta.css', 'game-over.meta.css', 'winner.meta.css'],
+  [
+    'base.meta.css',
+    'table.meta.css',
+    'game-set.meta.css',
+    'game-over.meta.css',
+    'winner.meta.css',
+    'ladybird.meta.css'
+  ],
   'style.css'
 )
 metaCompileFile('index.meta.html', 'index.html')
